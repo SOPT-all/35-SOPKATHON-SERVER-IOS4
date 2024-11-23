@@ -14,11 +14,14 @@ public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @Column(name = "theme")
+    private int theme;
 
     @Column(name = "invitation_code")
     private int invitationCode;
@@ -26,8 +29,9 @@ public class Question {
     @OneToMany
     private List<QuestionElement> questionElementList;
 
-    public Question(Member member, int invitationCode, List<QuestionElement> questionElementList) {
+    public Question(Member member, int theme, int invitationCode, List<QuestionElement> questionElementList) {
         this.member = member;
+        this.theme = theme;
         this.invitationCode = invitationCode;
         this.questionElementList = questionElementList;
     }

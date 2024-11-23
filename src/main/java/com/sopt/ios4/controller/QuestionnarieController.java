@@ -1,6 +1,6 @@
 package com.sopt.ios4.controller;
 
-import com.sopt.ios4.dto.SuccessCode;
+
 import com.sopt.ios4.dto.request.QuestionnarieCreateRequest;
 import com.sopt.ios4.dto.response.NewQuestionnarieResponse;
 import com.sopt.ios4.dto.ResponseDto;
@@ -18,11 +18,11 @@ public class QuestionnarieController {
     private final QuestionnarieService questionnarieService;
 
     @PostMapping("v1/questionnaire")
-    public ResponseEntity<ResponseDto<NewQuestionnarieResponse>> makeNewQuestionnarie(
+    public ResponseEntity<ResponseDto<Integer>> makeNewQuestionnarie(
             @RequestHeader("Authorization") Long memberId,
             @RequestBody QuestionnarieCreateRequest questionnarieCreateRequest
     ){
-        NewQuestionnarieResponse invitatinoCode = questionnarieService.createQuestionnarie(memberId, questionnarieCreateRequest);
-        return ResponseEntity.ok(ResponseDto.success(HttpStatus.CREATED.value(), "질문지가 생성되었습니다.", invitatinoCode)
+        int invitatinoCode = questionnarieService.createQuestionnarie(memberId, questionnarieCreateRequest);
+        return ResponseEntity.ok(ResponseDto.success(HttpStatus.CREATED.value(), "질문지가 생성되었습니다.", invitatinoCode));
     }
 }

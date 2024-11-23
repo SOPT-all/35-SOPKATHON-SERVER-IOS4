@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class InvalidArgsException extends RuntimeException {
-    private final String message;
+    private final ErrorCode errorCode;
 }

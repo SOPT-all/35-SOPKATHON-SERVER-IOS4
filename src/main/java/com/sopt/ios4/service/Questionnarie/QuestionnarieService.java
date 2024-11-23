@@ -4,9 +4,6 @@ import com.sopt.ios4.domain.Member;
 import com.sopt.ios4.domain.Question;
 import com.sopt.ios4.domain.QuestionElement;
 import com.sopt.ios4.dto.request.QuestionnarieCreateRequest;
-import com.sopt.ios4.dto.response.NewQuestionnarieResponse;
-import com.sopt.ios4.repository.MemberRepository;
-import com.sopt.ios4.repository.QuestionnarieRepository;
 import com.sopt.ios4.service.Member.MemberRetriever;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,41 +23,22 @@ public class QuestionnarieService {
     private final QuestionnarieSaver questionnarieSaver;
 
     @Transactional
-    public QuestionnarieCreateRequest createQuestionnarie(final long memberId, final QuestionnarieCreateRequest questionnarieCreateRequest) {
+    public int createQuestionnarie(final long memberId, final QuestionnarieCreateRequest questionnarieCreateRequest) {
 
         Member member = memberRetriever.findMemberById(memberId);
         int invitationCode = ThreadLocalRandom.current().nextInt(100000, 1000000);
         List<QuestionElement> questionElementList = new ArrayList<>();
 
-        questionElementList.add(
-                QuestionElement.builder()
-                        .id()
-                        .question()
-                        .subject()
-                        .isTrue()
-                        .build()
-        );
+        for (QuestionnarieCreateRequest.QuestionnarieDto dto : questionnarieCreateRequest.questions()) {
+            questionElementList.add(
+                    QuestionElement.builder()
+                            .subject(dto.subject())
+                            .isTrue(dto.answer())
+                            .build()
+            );
+        }
 
-        questionElementList.add(
-                QuestionElement.builder()
-                        .id()
-                        .question()
-                        .subject()
-                        .isTrue()
-                        .build()
-        );
-        questionElementList.add(
-                QuestionElement.builder()
-                        .id()
-                        .question()
-                        .subject()
-                        .isTrue()
-                        .build()
-        );
-
-
-
-        Question question = new Question(member, invitationCode, questionElementList);
+        Question question = new Question(member, questionnarieCreateRequest.theme(), invitationCode, questionElementList);
 
         return questionnarieSaver.save(question);
     }

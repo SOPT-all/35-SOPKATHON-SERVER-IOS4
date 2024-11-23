@@ -4,7 +4,11 @@ import com.sopt.ios4.domain.Member;
 import com.sopt.ios4.exception.ErrorCode;
 import com.sopt.ios4.exception.InvalidArgsException;
 import com.sopt.ios4.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@RequiredArgsConstructor
 public class MemberRetriever {
     private final MemberRepository memberRepository;
 

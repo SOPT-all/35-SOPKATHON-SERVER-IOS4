@@ -1,19 +1,17 @@
 package com.sopt.ios4.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class QuestionElement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", nullable = false)
@@ -25,11 +23,7 @@ public class QuestionElement {
     @Column(name = "is_true")
     private boolean isTrue; //영주가 선택한 정답
 
-    @Builder
-    public QuestionElement builder(long id, Question question, String subject, boolean isTrue) {
-        this.id = id;
-        this.question = question;
-        this.subject = subject;
-        this.isTrue = isTrue;
+    public QuestionElement() {
+
     }
 }
