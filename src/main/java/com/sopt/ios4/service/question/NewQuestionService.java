@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +38,15 @@ public class NewQuestionService {
 
         // 3. 저장
         return newQuestionRepository.save(newQuestion);
+    }
+
+    public List<String> getQuestionsByInvitationCode(int invitationCode) {
+        NewQuestion newQuestion = newQuestionRepository.findByInvitationCode(invitationCode)
+                .orElseThrow(() -> new IllegalArgumentException("올바른 초대코드를 입력해주세요."));
+
+        return newQuestion.getQuestions().stream()
+                .map(NewQuestionElement::getSubject)
+                .collect(Collectors.toList());
     }
 }
 
