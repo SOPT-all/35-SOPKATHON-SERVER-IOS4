@@ -2,32 +2,28 @@ package com.sopt.ios4.controller;
 
 import com.sopt.ios4.dto.ResponseDto;
 import com.sopt.ios4.exception.ErrorCode;
-import com.sopt.ios4.exception.NotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/test")
 public class TestController {
 
-    // 데이터가 있는 성공 응답
-    @GetMapping("/api/v1/success-with-data")
-    public ResponseDto<String> successWithData(@RequestParam(required = false) String message) {
-        if (message == null || message.isBlank()) {
-            throw new NotFoundException(ErrorCode.NOT_FOUND);
+    @GetMapping("/success")
+    public ResponseDto<String> getSuccess() {
+        return ResponseDto.success(HttpStatus.OK.value(), "This is a successful response!", "Success");
+    }
+
+    @GetMapping("/fail")
+    public ResponseDto<Void> getFail() {
+        return ResponseDto.fail(ErrorCode.NOT_FOUND, "This is a failure response");
+    }
+
+    @PostMapping("/post")
+    public ResponseDto<String> postData(@RequestBody String input) {
+        if (input == null || input.isEmpty()) {
+            return ResponseDto.fail(ErrorCode.NOT_FOUND, "Input cannot be null or empty");
         }
-        // Success 응답 반환 (본문 포함)
-        return ResponseDto.success(200, "Success message: " + message);
-    }
-
-    // 데이터가 없는 성공 응답
-    @GetMapping("/api/v1/success-no-data")
-    public ResponseDto<Void> successNoData() {
-        return ResponseDto.success(200);
-    }
-
-    @GetMapping("/api/v1/test-not-found")
-    public void testNotFoundException() {
-        throw new NotFoundException(ErrorCode.NOT_FOUND);
+        return ResponseDto.success(HttpStatus.CREATED.value(), input, "Data received successfully");
     }
 }

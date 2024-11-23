@@ -13,8 +13,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ResponseDto<Void>> handleNotFoundException(NotFoundException e) {
+        String errorMessage = e.getMessage() != null ? e.getMessage() : "Resource not found";
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
-                .body(ResponseDto.fail(e.getErrorCode()));
+                .body(ResponseDto.fail(e.getErrorCode(), errorMessage));
     }
 }
