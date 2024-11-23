@@ -11,7 +11,7 @@ public class TestController {
 
     @GetMapping("/success")
     public ResponseDto<String> getSuccess() {
-        return ResponseDto.success(HttpStatus.OK.value(), "This is a successful response!", "Success");
+        return ResponseDto.success(HttpStatus.OK.value(), "Success", "This is a successful response!");
     }
 
     @GetMapping("/fail")
