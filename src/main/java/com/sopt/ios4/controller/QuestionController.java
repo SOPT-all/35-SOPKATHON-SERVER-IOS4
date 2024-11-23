@@ -1,6 +1,7 @@
 package com.sopt.ios4.controller;
 
 import com.sopt.ios4.domain.NewQuestion;
+import com.sopt.ios4.domain.NewQuestionElement;
 import com.sopt.ios4.dto.ResponseDto;
 import com.sopt.ios4.dto.request.AnswerListRequest;
 import com.sopt.ios4.dto.request.QuestionnarieCreateRequest;
@@ -9,6 +10,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -42,4 +46,14 @@ a            )
         int answerCount = 0; //맞은 개수 반환
         return ResponseEntity.ok(ResponseDto.success(HttpStatus.OK.value(), "요청이 성공했습니다.", answerCount));
     }
+
+    @GetMapping("/v1/questionnaire")
+    public ResponseEntity<ResponseDto<List<String>>> createNewQuestion(@RequestParam int invitationCode
+    ) {
+        List<String> aa = newQuestionService.getQuestionsByInvitationCode((int) invitationCode);
+
+
+        return ResponseEntity.ok(ResponseDto.success(HttpStatus.OK.value(), "질문지가 생성되었습니다.", aa));
+    }
 }
+
