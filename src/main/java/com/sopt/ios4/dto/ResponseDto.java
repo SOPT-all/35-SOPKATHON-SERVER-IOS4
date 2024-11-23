@@ -5,20 +5,24 @@ import com.sopt.ios4.exception.ErrorCode;
 
 public record ResponseDto<T> (
         int status,
-        @JsonInclude(JsonInclude.Include.NON_NULL) T data
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        T data,
+        String message
+
 ) {
-    // 실패: 코드만 내려줌
-    public static <T> ResponseDto<T> fail(ErrorCode errorCode) {
-        return new ResponseDto<>(errorCode.getHttpStatus().value(), null);
+    // 실패니까 응답값 없음
+    public static <T> ResponseDto<T> fail(ErrorCode errorCode, String message) {
+        return new ResponseDto<>(errorCode.getHttpStatus().value(), null, message);
     }
 
-    // 성공: 응답 본문 포함
-    public static <T> ResponseDto<T> success(int status, T data) {
-        return new ResponseDto<>(status, data);
+    // 응답값 있는 성공
+    public static <T> ResponseDto<T> success(int status, T data, String message) {
+        return new ResponseDto<>(status, data, message);
     }
 
-    // 성공: 응답 본문 없음
-    public static ResponseDto<Void> success(int status) {
-        return new ResponseDto<>(status, null);
+
+    // 응답값 없는 성공
+    public static ResponseDto<Void> success(int status, String message) {
+        return new ResponseDto<>(status, null, message);
     }
 }
