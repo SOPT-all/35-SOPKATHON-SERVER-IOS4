@@ -2,6 +2,7 @@ package com.sopt.ios4.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,11 @@ public class QuestionElement {
     @Column(name = "is_true")
     private boolean isTrue; //영주가 선택한 정답
 
+    @Builder
+    public QuestionElement builder(long id, Question question, String subject, boolean isTrue) {
+        this.id = id;
+        this.question = question;
+        this.subject = subject;
+        this.isTrue = isTrue;
+    }
 }

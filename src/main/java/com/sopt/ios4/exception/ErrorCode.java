@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    NOT_FOUND(HttpStatus.NOT_FOUND);
+    NOT_FOUND(HttpStatus.NOT_FOUND),
+    NOT_EXISTS_MEMBER_WITH_ID(HttpStatus.NOT_FOUND);
 
     private final HttpStatus httpStatus;
 }
