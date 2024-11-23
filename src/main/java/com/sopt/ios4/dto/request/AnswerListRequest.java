@@ -6,5 +6,5 @@ import java.util.List;
 
 @Data
 public class AnswerListRequest {
-    private List<Integer> answerList;
+    private List<Boolean> answerList;
 }

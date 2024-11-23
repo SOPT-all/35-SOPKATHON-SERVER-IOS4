@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NewQuestionRepository extends JpaRepository<NewQuestion, Long> {
-    Optional<NewQuestion> findByInvitationCode(int invitationCode);
+    Optional<NewQuestion> findByInvitationCode(int invitationCode); // 초대코드로 질문지 찾아옴
 }
