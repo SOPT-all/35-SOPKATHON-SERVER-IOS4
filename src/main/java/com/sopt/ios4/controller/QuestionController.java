@@ -5,6 +5,7 @@ import com.sopt.ios4.domain.NewQuestionElement;
 import com.sopt.ios4.dto.ResponseDto;
 import com.sopt.ios4.dto.request.AnswerListRequest;
 import com.sopt.ios4.dto.request.QuestionnarieCreateRequest;
+import com.sopt.ios4.dto.response.QuestionnarieResponse;
 import com.sopt.ios4.service.question.NewQuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +35,10 @@ public class QuestionController {
 
 
     @GetMapping("/v1/questionnaire")
-    public ResponseEntity<ResponseDto<List<String>>> createNewQuestion(@RequestParam int invitationCode
+    public ResponseEntity<ResponseDto<QuestionnarieResponse>> createNewQuestion(@RequestParam int invitationCode
     ) {
-        List<String> aa = newQuestionService.getQuestionsByInvitationCode((int) invitationCode);
-        return ResponseEntity.ok(ResponseDto.success(HttpStatus.OK.value(), "질문지가 생성되었습니다.", aa));
+        QuestionnarieResponse questionnarieResponse = newQuestionService.getQuestionsByInvitationCode(invitationCode);
+        return ResponseEntity.ok(ResponseDto.success(HttpStatus.OK.value(), "질문지가 생성되었습니다.", questionnarieResponse));
     }
 
     // 질문지 문제 풀기 -> 몇 개 맞았는지 반환
