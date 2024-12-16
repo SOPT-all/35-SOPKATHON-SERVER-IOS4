@@ -4,6 +4,9 @@ import com.sopt.ios4.domain.NewQuestion;
 import com.sopt.ios4.domain.NewQuestionElement;
 import com.sopt.ios4.dto.request.AnswerListRequest;
 import com.sopt.ios4.dto.request.QuestionnarieCreateRequest;
+import com.sopt.ios4.dto.response.QuestionnarieResponse;
+import com.sopt.ios4.exception.ErrorCode;
+import com.sopt.ios4.exception.NotFoundException;
 import com.sopt.ios4.repository.NewQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,13 +46,16 @@ public class NewQuestionService {
         return newQuestionRepository.save(newQuestion);
     }
 
-    public List<String> getQuestionsByInvitationCode(int invitationCode) {
+    public QuestionnarieResponse getQuestionsByInvitationCode(int invitationCode) {
         NewQuestion newQuestion = newQuestionRepository.findByInvitationCode(invitationCode)
-                .orElseThrow(() -> new IllegalArgumentException("올바른 초대코드를 입력해주세요."));
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND));
 
-        return newQuestion.getQuestions().stream()
-                .map(NewQuestionElement::getSubject)
-                .collect(Collectors.toList());
+        return new QuestionnarieResponse (
+                newQuestion.getId(),
+                newQuestion.getQuestions().stream()
+                        .map(NewQuestionElement::getSubject)
+                        .collect(Collectors.toList())
+        );
     }
 
     // 질문지 id 에 해당하는 질문들의 답 가져옴
