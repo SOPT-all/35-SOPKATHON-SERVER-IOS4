@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,9 +24,10 @@ public class QuestionController {
     private final NewQuestionService newQuestionService;
 
     @PostMapping("/v1/questionnaire")
-    public ResponseEntity<ResponseDto<Integer>> createNewQuestion(@RequestBody @Valid QuestionnarieCreateRequest newQuestion
-            ) {
-
+    public ResponseEntity<ResponseDto<Integer>> createNewQuestion(
+            @RequestBody @Valid QuestionnarieCreateRequest newQuestion
+            )
+    {
         NewQuestion aa = newQuestionService.createQuestionnaire(newQuestion);
         int invitatinoCode = aa.getInvitationCode();
         return ResponseEntity.ok(ResponseDto.success(HttpStatus.CREATED.value(), "질문지가 생성되었습니다.", invitatinoCode));
@@ -50,3 +51,4 @@ public class QuestionController {
         return ResponseEntity.ok(ResponseDto.success(HttpStatus.OK.value(), "요청이 성공했습니다.", answerCount));
     }
 }
+

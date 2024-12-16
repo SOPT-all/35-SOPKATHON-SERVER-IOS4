@@ -1,5 +1,6 @@
-package com.sopt.ios4.domain;
+package com.sopt.ios4.domain.trash;
 
+import com.sopt.ios4.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,20 +9,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class QuestionElement {
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
-    @Column(name = "subject")
-    private String subject;
+    @Column(name = "invitation_code")
+    private int invitationCode;
 
-    @Column(name = "is_true")
-    private boolean isTrue; //영주가 선택한 정답
 
 }

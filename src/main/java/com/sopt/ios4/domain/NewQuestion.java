@@ -10,8 +10,8 @@ import java.util.List;
 
 @Entity
 @Getter
-    @NoArgsConstructor(access = AccessLevel.PUBLIC )
-public class NewQuestion {
+@NoArgsConstructor(access = AccessLevel.PUBLIC )
+public class NewQuestion { //질문지
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

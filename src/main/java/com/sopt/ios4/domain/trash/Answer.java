@@ -1,5 +1,6 @@
-package com.sopt.ios4.domain;
+package com.sopt.ios4.domain.trash;
 
+import com.sopt.ios4.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
